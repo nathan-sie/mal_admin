@@ -12,7 +12,7 @@
       </el-dropdown-menu>
     </template>
   </el-dropdown> -->
-  <div class="purchase">
+  <!-- <div class="purchase">
     <el-popconfirm
       title="确定下单吗？"
       @confirm="submitOrder"
@@ -22,7 +22,7 @@
       </template>
     </el-popconfirm>
     
-  </div>
+  </div> -->
   <div class="contain-good">
     <el-card :body-style="{ padding: '0px' }" v-for="item in goodList.message">
       <img

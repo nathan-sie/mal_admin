@@ -2,7 +2,7 @@
   <el-card class="good-container">
     <template #header>
       <div class="header">
-        <el-button type="primary" @click="handleAdd">新增商品</el-button>
+        <!-- <el-button type="primary" @click="handleAdd">新增商品</el-button> -->
         <el-popconfirm
           title="确定删除吗？"
           @confirm="handleDelete"
@@ -33,6 +33,7 @@
       :data="tableData"
       tooltip-effect="dark"
       style="width: 100%"
+      row-key="id"
       @selection-change="handleSelectionChange">
       <el-table-column
         type="selection"
@@ -41,6 +42,7 @@
       <el-table-column
         prop="code"
         label="商品编号"
+        width="140px"
       >
       </el-table-column>
       <el-table-column
@@ -206,12 +208,31 @@ export default {
     // 获取商品列表
     const getGoodList = async () => {
       state.loading = true
+      state.tableData = []
       const res = await getAllGood()
-      state.tableData = res.data
-      state.tableData.forEach( item => {
+      // state.tableData = res.data
+      // state.tableData.forEach( item => {
+      //   item.type = state.allTypes.get(item.type)
+      //   item.currentPrice = getPrice(item.characteristic, item.standardPrice, item.createDate, item.deadline)
+      //   item.characteristic = state.characteristicMap.get(item.characteristic)
+      // })
+      res.data.forEach( item => {
         item.type = state.allTypes.get(item.type)
         item.currentPrice = getPrice(item.characteristic, item.standardPrice, item.createDate, item.deadline)
-        item.characteristic = state.characteristicMap.get(item.characteristic)
+        item.children = []
+        if( !state.tableData.find( i => i.code == item.code ) ) {
+          state.tableData.push( item )
+        } else {
+          state.tableData.forEach( i => {
+            if ( i.code == item.code ) {
+              if (i.children != undefined ) {
+                i.children = [...i.children, item]
+              } else {
+                i.children = [item]
+              }
+            }
+          })
+        }
       })
       state.loading = false
       // axios.get('/goods/admin/list', {
@@ -286,17 +307,38 @@ export default {
     const handleSelectChange = (val) => { // 类别的ID
       if( val == '' ) {
         getGoodList()
+      } else {
+        getGoodListByType(val)
       }
-      getGoodListByType(val)
     }
     const getGoodListByType = async (typeId) => {
       state.loading = true
+      state.tableData = []
       const res = await getSeletedGood(typeId)
-      state.tableData = res.data
-      state.tableData.forEach( item => {
+      // state.tableData = res.data
+      // state.tableData.forEach( item => {
+      //   item.type = state.allTypes.get(item.type)
+      //   item.currentPrice = getPrice(item.characteristic, item.standardPrice, item.createDate, item.deadline)
+      //   item.characteristic = state.characteristicMap.get(item.characteristic)
+      // })
+      console.log(res.data);
+      res.data.forEach( item => {
         item.type = state.allTypes.get(item.type)
         item.currentPrice = getPrice(item.characteristic, item.standardPrice, item.createDate, item.deadline)
-        item.characteristic = state.characteristicMap.get(item.characteristic)
+        item.children = []
+        if( !state.tableData.find( i => i.code == item.code ) ) {
+          state.tableData.push( item )
+        } else {
+          state.tableData.forEach( i => {
+            if ( i.code == item.code ) {
+              if (i.children != undefined ) {
+                i.children = [...i.children, item]
+              } else {
+                i.children = [item]
+              }
+            }
+          })
+        }
       })
       state.loading = false
     }

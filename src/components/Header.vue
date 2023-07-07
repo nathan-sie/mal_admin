@@ -1,6 +1,6 @@
 <template>
 	<div class="header">
-		<div class="userinfo">
+		<!-- <div class="userinfo">
 			<el-avatar
 				:size="32"
 				class="mr-3"
@@ -19,12 +19,12 @@
 					</el-dropdown-menu>
 				</template>
 			</el-dropdown>
-		</div>
-		<div class="icons-group">
+		</div> -->
+		<!-- <div class="icons-group">
 			<el-icon><BellFilled /></el-icon>
 			<el-icon><Tools /></el-icon>
 			<el-icon><Search /></el-icon>
-		</div>
+		</div> -->
 	</div>
 </template>
 
@@ -49,7 +49,7 @@ const logout = () => {
 	height: 100%;
 	display: flex;
 	flex-direction: row-reverse;
-
+	border-bottom: 2px solid #ccc;
 	.userinfo {
 		height: 100%;
 		background-color: #fff;
