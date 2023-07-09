@@ -47,6 +47,11 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="stock"
+          label="商品库存"
+        >
+        </el-table-column>
+        <el-table-column
           prop="currentPrice"
           label="商品售价(元)"
           width="140px"
@@ -131,6 +136,9 @@ const getGoodList = async () => {
   res.data.forEach( item => {
     item.type = allTypes.get(item.type)
     item.currentPrice = getPrice(item.characteristic, item.standardPrice, item.createDate, item.deadline)
+    if( item.characteristic == 2 ) {
+      item.stock = '~'
+    }
     item.children = []
     if( !goodList.message.find( i => i.code == item.code ) ) {
       goodList.message.push( item )

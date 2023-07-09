@@ -1,6 +1,6 @@
 <template>
 	<div class="header">
-		<!-- <div class="userinfo">
+		<div class="userinfo">
 			<el-avatar
 				:size="32"
 				class="mr-3"
@@ -8,18 +8,18 @@
 			/>
 			<el-dropdown>
 				<span class="el-dropdown-link">
-					aaaa<el-icon class="el-icon--right"><arrow-down /></el-icon>
+					{{ username }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
 				</span>
 				<template #dropdown>
 					<el-dropdown-menu>
-						<el-dropdown-item ><router-link to="/userinfo">个人信息</router-link></el-dropdown-item>
+						<!-- <el-dropdown-item ><router-link to="/userinfo">个人信息</router-link></el-dropdown-item>
 						<el-dropdown-item ><router-link to="/recycled">回收站</router-link></el-dropdown-item>
-						<el-dropdown-item ><router-link to="/security">安全设置</router-link></el-dropdown-item>
+						<el-dropdown-item ><router-link to="/security">安全设置</router-link></el-dropdown-item> -->
 						<el-dropdown-item ><router-link	to="/login" @click="logout()">退出登录</router-link></el-dropdown-item>
 					</el-dropdown-menu>
 				</template>
 			</el-dropdown>
-		</div> -->
+		</div>
 		<!-- <div class="icons-group">
 			<el-icon><BellFilled /></el-icon>
 			<el-icon><Tools /></el-icon>
@@ -36,8 +36,14 @@ import {
 	Search,
 } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
 
 const router = useRouter()
+const username = ref('')
+
+onMounted(()  => {
+	username.value = localStorage.getItem('token').split('&')[1].replace('\"', '')
+})
 const logout = () => {
 	localStorage.removeItem('token')
 	router.push('/login')

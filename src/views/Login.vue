@@ -87,7 +87,15 @@ export default {
           const res = await login(state.ruleForm.username, state.ruleForm.password)
           if (res.code == 200) {
             localSet('token', res.data)
-            window.location.href = '/'
+            window.location.href = '/category'
+          } else {
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: '密码错误，请重试！',
+              showConfirmButton: false,
+              timer: 1500
+            })
           }
         } else {
           console.log('error submit!!')
