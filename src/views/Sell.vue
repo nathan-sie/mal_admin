@@ -154,7 +154,7 @@ const getGoodList = async () => {
 
 const handlePurchase = (good) => {
   dialogFormVisible.value = true
-  currentGood = good
+  currentGood = Object.assign( {}, good )
   currentGood.stock = 0
 }
 const buy = async () => {
@@ -179,6 +179,7 @@ const buy = async () => {
       })
     }
     currentGood = {}
+    getGoodList()
     dialogFormVisible.value = false
   }
   // if (order.goods.find(item => item.id == currentGood.id)) {
