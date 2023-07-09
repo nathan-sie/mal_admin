@@ -218,6 +218,9 @@ export default {
       // })
       res.data.forEach( item => {
         item.type = state.allTypes.get(item.type)
+        if( item.characteristic == 2 ) {
+          item.stock = '~'
+        }
         item.currentPrice = getPrice(item.characteristic, item.standardPrice, item.createDate, item.deadline)
         item.children = []
         if( !state.tableData.find( i => i.code == item.code ) ) {
@@ -321,7 +324,6 @@ export default {
       //   item.currentPrice = getPrice(item.characteristic, item.standardPrice, item.createDate, item.deadline)
       //   item.characteristic = state.characteristicMap.get(item.characteristic)
       // })
-      console.log(res.data);
       res.data.forEach( item => {
         item.type = state.allTypes.get(item.type)
         item.currentPrice = getPrice(item.characteristic, item.standardPrice, item.createDate, item.deadline)

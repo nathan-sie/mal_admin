@@ -93,6 +93,7 @@ const getGoodList = async () => {
 const handlePurchase = async (good) => {
   const res = await getMaxBatch(good.name)
   maxBatch.value = res.data
+  console.log(maxBatch.value);
   currentGood = good
   currentGood.stock = 0
   dialogFormVisible.value = true

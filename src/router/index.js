@@ -8,7 +8,7 @@ const routes = [
     path: '/',
     name: 'layout',
     component: Layout,
-    redirect: '/category',
+    redirect: '/login',
     children: [
       // 首页
       {

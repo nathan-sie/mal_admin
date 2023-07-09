@@ -13,6 +13,7 @@ export function search(keyword) {
   return axios.get(`/api/good/search/${keyword}`)
 }
 export function addGood(good) {
+  console.log(good);
   return axios.post("/api/good/addGood", { 
     code: good.code,
     name: good.name,
@@ -24,8 +25,8 @@ export function addGood(good) {
     buyPrice: good.buyPrice,
     standardPrice: good.standardPrice,
     currentPrice: good.currentPrice,
-    createDate: good.createDate,
-    deadline: good.deadline
+    createDate: good.createDate || '',
+    deadline: good.deadline || ''
   }, 
   {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
