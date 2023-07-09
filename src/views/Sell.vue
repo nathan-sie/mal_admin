@@ -69,7 +69,7 @@
           width="100"
         >
           <template #default="scope">
-            <a style="cursor: pointer; margin-right: 10px" @click="handlePurchase(scope.row)">购买</a>
+            <a style="cursor: pointer; margin-right: 10px" @click="handlePurchase(scope.row)">售卖</a>
           </template>
         </el-table-column>
       </el-table>
