@@ -237,6 +237,7 @@ export default {
           })
         }
       })
+      state.tableData = state.tableData.sort( (a, b) => a.code - b.code )
       state.loading = false
       // axios.get('/goods/admin/list', {
       //   params: {
@@ -368,11 +369,18 @@ export default {
     }
     //导出商品信息
     const exportToExcel = () => {
+      const arr = []
+      state.tableData.forEach( item => {
+        if (item.children.length > 0) {
+          item.children.forEach( i => arr.push(i) )
+        } 
+        arr.push(item)
+      }) 
       // 创建工作簿
       const workbook = XLSX.utils.book_new();
 
       // 创建工作表
-      const worksheet = XLSX.utils.json_to_sheet(state.tableData);
+      const worksheet = XLSX.utils.json_to_sheet(arr);
 
       // 将工作表添加到工作簿
       XLSX.utils.book_append_sheet(workbook, worksheet, '商品信息');

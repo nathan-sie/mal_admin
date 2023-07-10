@@ -150,6 +150,7 @@ const getGoodList = async () => {
       })
     }
   })
+  goodList.message = goodList.message.sort( (a, b) => a.code - b.code )
 }
 
 const handlePurchase = (good) => {
