@@ -24,7 +24,7 @@ export function addGood(good) {
     stock: good.stock,
     buyPrice: good.buyPrice,
     standardPrice: good.standardPrice,
-    currentPrice: good.currentPrice,
+    currentPrice: good.currentPrice || '0',
     createDate: good.createDate || '',
     deadline: good.deadline || ''
   }, 
