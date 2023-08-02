@@ -23,3 +23,7 @@ export function updateCategory(id, name) {
 export function batchDelete(ids) {
   return axios.delete(`/api/category/batchDelete/${ids}`)
 }
+
+export function searchCategory(name) {
+  return axios.get(`/api/category/search/${name}`)
+}
