@@ -222,6 +222,13 @@ export default {
           item.stock = '~'
         }
         item.currentPrice = getPrice(item.characteristic, item.standardPrice, item.createDate, item.deadline)
+        if( item.characteristic == 1) {
+          item.characteristic = '普通商品'
+        } else if( item.characteristic == 2 ) {
+          item.characteristic = '充值商品'
+        } else if( item.characteristic == 3 ) {
+          item.characteristic = '增值商品'
+        }
         item.children = []
         if( !state.tableData.find( i => i.code == item.code ) ) {
           state.tableData.push( item )
