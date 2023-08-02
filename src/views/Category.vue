@@ -11,6 +11,14 @@
             <el-button type="danger" :icon="Delete">批量删除</el-button>
           </template>
         </el-popconfirm>
+        <div style="display: flex; position: absolute; left: 80%;">
+          <el-input v-model="keyword" />
+          <el-button type="primary" :icon="Search" @click="handleSearch(keyword)">搜索</el-button>
+          <div style="margin-left: 5px;">
+            <el-button  @click="handleClear">重置</el-button>
+          </div>
+        </div>
+        
       </div>
     </template>
     <el-table
@@ -77,8 +85,8 @@ import { onMounted, onUnmounted, reactive, ref, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import DialogAddCategory from '../components/DialogAddCategory.vue'
-import { getAllCategory } from '../api/category'
-import { Plus, Delete } from '@element-plus/icons-vue'
+import { getAllCategory, searchCategory } from '../api/category'
+import { Plus, Delete, Search } from '@element-plus/icons-vue'
 import { batchDelete } from '../api/category'
 import Swal from 'sweetalert2'
 
@@ -101,7 +109,8 @@ export default {
       pageSize: 10, // 分页大小
       type: 'add', // 操作类型
       level: 1,
-      parent_id: 0
+      parent_id: 0,
+      keyword: ''
     })
     onMounted(() => {
       getCategory()
@@ -162,9 +171,35 @@ export default {
         getCategory()
       }
     }
+    // 搜索
+    const handleSearch = async (keyword) => {
+      state.loading = true
+      if (keyword) {
+        const res = await searchCategory(keyword)
+        if( res.code == 200 ) {
+          state.tableData = res.data
+        } else {
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: '搜索未找到！',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+      } else {
+        getCategory()
+      }
+      state.loading = false
+    }
+    // 重置
+    const handleClear = () => {
+      state.keyword = ''
+      getCategory()
+    }
     const changePage = (val) => {
       state.currentPage = val
-      getCategory()
+      state.tableData = res.data
     }
     return {
       ...toRefs(state),
@@ -177,6 +212,8 @@ export default {
       handleDeleteOne,
       getCategory,
       changePage,
+      handleSearch,
+      handleClear
     }
   }
 }
